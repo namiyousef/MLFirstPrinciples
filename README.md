@@ -5,6 +5,28 @@ Where convenient, I've tried to engage with the technologies more than treating 
 a black box. This repository is closely related with my other *Mini_Projects* repository. This one
 is aimed at understanding the content; the other is focused on implementation and practice.
 
+# Repository Contents:
+
+**Classification:**
+  Currently empty
+
+**Clustering:**
+  Includes a notebooks on K-Means clustering
+
+**Decision Trees:**
+- Random Forests: directory containing random forests concepts, including Random Forest Regression
+- xgboost: directory containing 
+
+**Neural Networks:**
+  Currently empty
+
+**Regression:**
+  Currently empty
+
+**Statistics:**
+  Includes a notebook on Homo and Heteroscedasticity
+
+
 ### List of technologies to learn
 - External tools
     - Apache Spark
@@ -64,19 +86,3 @@ is aimed at understanding the content; the other is focused on implementation an
 
         
 ### List of technologies to practice
-# Repository Contents:
-
-**Classification:**
-  Currently empty
-
-**Clustering:**
-  Includes a notebooks on K-Means clustering
-
-**Neural Networks:**
-  Currently empty
-
-**Regression:**
-  Currently empty
-
-**Statistics:**
-  Includes a notebook on Homo and Heteroscedasticity
