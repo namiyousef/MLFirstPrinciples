@@ -58,19 +58,27 @@ def plot_classes(X,y, vars = None, **kwargs):
     else:
         ncols = int(X.shape[1] ** (1/2))
         nrows = X.shape[1] // ncols
-    print(ncols, nrows)
-    fig, axes = plt.subplots(nrows = nrows, ncols = ncols)
+
+    fig, axes = plt.subplots(nrows = nrows, ncols = ncols, figsize = (nrows * 8, ncols * 8))
+    feature_1 = 0
+    feature_2 = feature_1 + 1
     for j, column in enumerate(axes):
         for i, row in enumerate(column):
             for y_unique in np.unique(y):
-                axes[j,i].plot(X[y == y_unique, 0],X[y == y_unique, 1], '.')
+                axes[j,i].plot(
+                    X[y == y_unique, feature_1],
+                    X[y == y_unique, feature_2],
+                    '.'
+                )
+                axes[j,i].set_xlabel('Feature {}'.format(feature_1))
+                axes[j,i].set_ylabel('Feature {}'.format(feature_2))
 
-
-    #for columns in range(X.shape[1]):
-    #    for y_unique in np.unique(y):
-    #        axes[i].plot(X[y == y_unique, 0], X[y == y_unique, 1], '.')
-
-    #return fig, ax
+            feature_2 += 1
+            if feature_2 >= X.shape[1]:
+                feature_1 += 1
+                feature_2 = feature_1 + 1
+    plt.legend([*np.unique(y)])
+    return fig, axes
 
 def reshape_by_component(f, *x):
     """
