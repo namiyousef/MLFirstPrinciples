@@ -87,7 +87,7 @@ def reshape_by_component(f, *x):
     return f.reshape(*[len(i) for i in x])
 
 
-def plot_classes(X, y, plot = None):
+def plot_classes(X, y, plot = None, shape = '.'):
     """
     Plot 2 dimensional array X with corresponding y (classes) in different colours
 
@@ -110,8 +110,8 @@ def plot_classes(X, y, plot = None):
         ax.plot(
             X[y == c, 0],
             X[y == c, 1],
-            '.',
-            c=color
+            shape,
+            c=color,
         )
     return fig, ax
 
