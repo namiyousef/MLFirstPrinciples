@@ -1,7 +1,7 @@
-import torch
 from functools import partial
 import time
 from first_principles.kernel_functions import polynomial_kernel
+import torch
 
 class KernelPerceptron:
 
@@ -145,7 +145,7 @@ class OneVsAll:
         self.k = len(self.classes)
 
     def fit(self, X, y):
-        y = [torch.where(y == i, 1, -1) for i in classes]
+        y = [torch.where(y == i, 1, -1) for i in self.classes]
         self.weights = torch.cat([self.model.fit(X, y_).weights for y_ in y]).reshape(self.k, -1).T
 
         return self
