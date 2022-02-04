@@ -3,6 +3,13 @@
 
 format: jb-book
 root: intro
-chapters:
-- file: markdown
-- file: notebooks
+parts:
+  - caption: Introduction
+    chapters:
+      - file: setup.md
+  - caption: Supervised Learning
+    chapters:
+      - file: markdown.md
+  - caption: Unsupervised Learning
+    chapters:
+      - file: notebooks.ipynb

@@ -1,7 +1,6 @@
-# Welcome to your Jupyter Book
+# Machine Learning First Principles
 
-This is a small sample book to give you a feel for how book content is
-structured.
+This is a collection of my notes on classical Machine Learning methods. 
 
 :::{note}
 Here is a note!
