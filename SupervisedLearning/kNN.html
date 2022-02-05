@@ -1,0 +1,1374 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>\(k\)-Nearest-Neighbours &#8212; Machine Learning First Principles</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Content with notebooks" href="../notebooks.html" />
+    <link rel="prev" title="Introduction to Supervised Learning" href="intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning First Principles</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Machine Learning First Principles
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../Introduction/intro.html">
+   What is Machine Learning?
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Supervised Learning
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction to Supervised Learning
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   <span class="math notranslate nohighlight">
+    \(k\)
+   </span>
+   -Nearest-Neighbours
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Unsupervised Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../notebooks.html">
+   Content with notebooks
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/SupervisedLearning/kNN.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/namiyousef/MLFirstPrinciples"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/namiyousef/MLFirstPrinciples/issues/new?title=Issue%20on%20page%20%2FSupervisedLearning/kNN.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/namiyousef/MLFirstPrinciples/master?urlpath=tree/docs/SupervisedLearning/kNN.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   <span class="math notranslate nohighlight">
+    \(k\)
+   </span>
+   -Nearest-Neighbours
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm">
+     Algorithm
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pros-and-cons">
+     Pros and Cons
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     Implementation
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-toy-case">
+     Example: toy case
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiments">
+   Experiments
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#todo">
+     TODO
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-decision-boundary-how-k-affects-smoothness">
+     The decision boundary: how k affects smoothness
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#useful-links">
+   Useful Links
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>k-Nearest-Neighbours</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   <span class="math notranslate nohighlight">
+    \(k\)
+   </span>
+   -Nearest-Neighbours
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm">
+     Algorithm
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pros-and-cons">
+     Pros and Cons
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation">
+     Implementation
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-toy-case">
+     Example: toy case
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiments">
+   Experiments
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#todo">
+     TODO
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-decision-boundary-how-k-affects-smoothness">
+     The decision boundary: how k affects smoothness
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#useful-links">
+   Useful Links
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="k-nearest-neighbours">
+<h1><span class="math notranslate nohighlight">\(k\)</span>-Nearest-Neighbours<a class="headerlink" href="#k-nearest-neighbours" title="Permalink to this headline">¶</a></h1>
+<p><span class="math notranslate nohighlight">\(k\)</span>-Nearest-Nieghbours (shortened to kNN) is a popular distance based Machine Learning algorithm.</p>
+<div class="section" id="algorithm">
+<h2>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h2>
+<p>The kNN algorithm is very simple. It is non-parametric, and the only hyperparameter needed is <span class="math notranslate nohighlight">\(k\)</span>, the number of nearest neighbours to <span class="math notranslate nohighlight">\(\underline{x}\)</span> to use for classification.</p>
+<p>The algorithm works like this:</p>
+<ol class="simple">
+<li><p>Given an <span class="math notranslate nohighlight">\(X_{\mathrm{train}}\in \mathbb{R}^{m\times d}\)</span> and a categorical variable <span class="math notranslate nohighlight">\(y_{\mathrm{train}}\in \{1,\cdots, C\}\)</span> where <span class="math notranslate nohighlight">\(C\)</span> is the number of unique classes</p></li>
+<li><p>Take a test point, <span class="math notranslate nohighlight">\(\underline{x}\)</span> and find it’s distance to all the points in <span class="math notranslate nohighlight">\(X_{\mathrm{train}}\)</span></p></li>
+<li><p>Sort the distances in ascending order, making sure that the original index is saved</p></li>
+<li><p>Take the first <span class="math notranslate nohighlight">\(k\)</span> closest points, and determine their corresponding classes <span class="math notranslate nohighlight">\(y\)</span></p></li>
+<li><p>Classify <span class="math notranslate nohighlight">\(\underline{x}\)</span> as the majority <span class="math notranslate nohighlight">\(y\)</span> value from the <span class="math notranslate nohighlight">\(k\)</span> nearest points</p></li>
+</ol>
+</div>
+<div class="section" id="pros-and-cons">
+<h2>Pros and Cons<a class="headerlink" href="#pros-and-cons" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>When <span class="math notranslate nohighlight">\(k\)</span> is even, you can have undefined values for the majority vote. In such cases, different methods can be applied, for instance just randomly choosing one of the classes</p></li>
+<li><p>The simple kNN method using exhaustive search is computationally intensive (you can try this using the kNN function that I’ve coded!). Alternative algorithms such as kdtree accelerate the process, but become slow again once the dimensionality of the problem <span class="math notranslate nohighlight">\(d\)</span> becomes really big. New libraries such as faiss by Facebook enable much faster kNN computation</p></li>
+<li><p>In general, the method becomes really inefficient as the dimensionality of the problem increases</p></li>
+</ul>
+</div>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">euclidean_dist</span><span class="p">(</span><span class="n">arr1</span><span class="p">,</span> <span class="n">arr2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Function to calculate the distance between 2 points in Euclidean space &quot;&quot;&quot;</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">arr1</span><span class="p">,</span> <span class="n">arr2</span><span class="p">):</span>
+        <span class="n">dist</span> <span class="o">+=</span> <span class="p">(</span><span class="n">x1</span><span class="o">-</span><span class="n">x2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">dist</span><span class="o">**</span><span class="mf">0.5</span>
+
+
+
+<span class="k">class</span> <span class="nc">kNN</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation of the kNN algorithm, designed with the sklearn API in mind (i.e. use of methods .fit and .predict)</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    </span>
+<span class="sd">    k : int</span>
+<span class="sd">        number of nearest neighbours</span>
+<span class="sd">        </span>
+<span class="sd">    metric : function</span>
+<span class="sd">        metric to use to determine the nearest neighbour</span>
+<span class="sd">        </span>
+<span class="sd">    algorithm : str</span>
+<span class="sd">        type of algorithm to use to fit the model, currently only supports brute</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">algorithm</span> <span class="o">=</span> <span class="s1">&#39;brute&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">algorithm</span>
+    
+    
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;brute&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+    
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">ignore_duplicates</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        X : np.array</span>
+<span class="sd">            Test array with m samples and n dimensions</span>
+<span class="sd">            </span>
+<span class="sd">        ignore_duplicates : bool</span>
+<span class="sd">            if set to true, then only the k nearest points as they appear in memory will be considered</span>
+<span class="sd">            setting to False is for cases where you want to consider points that are of the same distance</span>
+<span class="sd">            away to be identical. The tutorial requires this to be set to False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[]</span>        
+        
+        <span class="k">for</span> <span class="n">x_test</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;brute&#39;</span><span class="p">:</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">x_train</span><span class="p">)</span> <span class="k">for</span> <span class="n">x_train</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">]</span>
+            <span class="n">dist</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)))</span>
+            
+            <span class="k">if</span> <span class="n">ignore_duplicates</span><span class="p">:</span>
+                <span class="c1"># only takes the closest k points as they appear in memory</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># treats points that are equally far from our test point as the same</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">dist_unique</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist_unique</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dist_unique</span><span class="p">:</span>
+                        <span class="n">dist_unique</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                    <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span>
+
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">sum</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+                <span class="c1"># case for k = even. This is only valid for a binary classifier</span>
+                <span class="c1"># TODO can you generalise this for any k?</span>
+                
+                <span class="c1"># if unsure which to use, choose randomly between 1 and 0</span>
+                <span class="n">y_pred</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+                
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">y_pred</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">count</span><span class="p">))</span>
+                
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="example-toy-case">
+<h2>Example: toy case<a class="headerlink" href="#example-toy-case" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The fit function normally does some training, but in the case of a simple implementation kNN, this has the purpose of simply storing the data. For more info click <a class="reference external" href="https://stats.stackexchange.com/questions/349842/why-do-we-need-to-fit-a-k-nearest-neighbors-classifier">here</a></p></li>
+<li><p>make sure to use the log(nsamples) to estimate which k to use</p></li>
+<li><p>add stuff about evaluating the algorithm, error, cross validation, plot of the voronoi cells ?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="n">currentdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())))</span>
+<span class="n">parentdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">currentdir</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">parentdir</span><span class="p">)</span> 
+
+<span class="c1"># data generation modules</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_circles</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+
+<span class="c1"># plotting</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">PythonFiles.plotting</span> <span class="kn">import</span> <span class="n">plot_classes</span> <span class="c1">#plot_contour</span>
+
+<span class="c1"># mathematical</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1917</span><span class="o">/</span><span class="mf">2263512856.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> 
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="c1"># data generation modules</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_circles</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> 
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;sklearn&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load the dataset</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">make_circles</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">noise</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">factor</span> <span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># visualize plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_classes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$x_2$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$x_2$&#39;)
+</pre></div>
+</div>
+<img alt="../_images/kNN_7_1.png" src="../_images/kNN_7_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create our model</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n_samples</span><span class="p">))</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">kNN</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">euclidean_dist</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># create a contour plot</span>
+<span class="n">plot_contour</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])),</span> <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])),</span> <span class="n">plot</span> <span class="o">=</span> <span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">),</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Contour plot showing decision boundary of kNN for $k=$</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Class 0&#39;</span><span class="p">,</span> <span class="s1">&#39;Class 1&#39;</span><span class="p">])</span>
+
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/kNN_8_0.png" src="../_images/kNN_8_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="experiments">
+<h1>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h1>
+<p>Here we take a look at the impact of <span class="math notranslate nohighlight">\(k\)</span> on error, and how the optimal value of <span class="math notranslate nohighlight">\(k\)</span> changes with the size of the dataset <span class="math notranslate nohighlight">\(m\)</span></p>
+<div class="section" id="todo">
+<h2>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>add experiment for measuring bias vs. variance</p></li>
+<li><p>can you compare model performance to bayes estimator?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">faiss</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="c1">#from mlxtend.evaluate import bias_variance_decomp</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+
+
+
+<span class="k">class</span> <span class="nc">kNN_faiss</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements kNN using Facebook&#39;s faiss library for fast computation</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    </span>
+<span class="sd">    k : int</span>
+<span class="sd">        the number of nearest neighbours to use</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fits the model. Here faiss prepares the index (data structure) that is used for kNN computation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">faiss</span><span class="o">.</span><span class="n">IndexFlatL2</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">distances</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">k</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">votes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">votes</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">predictions</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># algorithm for determining optimal k</span>
+
+<span class="k">def</span> <span class="nf">generalisation_error</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span>
+        <span class="n">data_generator</span><span class="p">,</span>
+        <span class="n">k_range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">50</span><span class="p">],</span>
+        <span class="n">runs</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determines the generalisation error as a function of k</span>
+
+<span class="sd">    model : class</span>
+<span class="sd">        Class of the model to use. Must be built using sklearn API</span>
+<span class="sd">    </span>
+<span class="sd">    data_generator : tuple</span>
+<span class="sd">        tuple in the form (generator_function, parameters)</span>
+<span class="sd">        </span>
+<span class="sd">    k_range : iterable</span>
+<span class="sd">        defines the range of k&#39;s to use for the problem. Defaults to [1,50)</span>
+<span class="sd">        </span>
+<span class="sd">    runs : int</span>
+<span class="sd">        indicates how many times to repeat the experiment</span>
+<span class="sd">        </span>
+<span class="sd">    test_size : float</span>
+<span class="sd">        indicates percentage of train set to use for testing</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data_generator</span><span class="p">,</span> <span class="n">parameters</span> <span class="o">=</span> <span class="n">data_generator</span>
+
+    <span class="n">global_errors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tot_time</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">k_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">k_range</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;We are at k=</span><span class="si">{</span><span class="n">k_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">tot_err</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">runs</span><span class="p">):</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_generator</span><span class="p">(</span><span class="o">**</span><span class="n">parameters</span><span class="p">)</span>
+            
+            
+            <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">test_size</span><span class="p">)</span>
+            
+            <span class="n">kNN_model</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">k_</span><span class="p">)</span>
+            <span class="n">kNN_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+            <span class="n">y_hat</span> <span class="o">=</span> <span class="n">kNN_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+                <span class="n">X_test</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="c1">#np.ascontiguousarray(X_test),</span>
+            <span class="p">)</span>
+
+            <span class="n">correctness_index</span> <span class="o">=</span> <span class="p">[</span><span class="n">y_hat_</span> <span class="o">==</span> <span class="n">y_test_</span> <span class="k">for</span> <span class="n">y_hat_</span><span class="p">,</span> <span class="n">y_test_</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)]</span>
+
+            <span class="n">tot_err</span> <span class="o">+=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">correctness_index</span><span class="p">)</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">correctness_index</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">correctness_index</span><span class="p">)</span>
+
+        <span class="n">global_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot_err</span> <span class="o">/</span> <span class="n">runs</span><span class="p">)</span>
+        <span class="n">time_taken</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="n">tot_time</span> <span class="o">+=</span> <span class="n">time_taken</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Time taken for k=</span><span class="si">{</span><span class="n">k_</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">time_taken</span><span class="si">}</span><span class="s1">. Estimated time remaining is </span><span class="si">{</span><span class="p">(</span><span class="n">tot_time</span> <span class="o">/</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">k_range</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># average the generalisation error</span>
+
+    <span class="k">return</span> <span class="n">global_errors</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_k</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">test_size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_k</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">int</span><span class="p">)</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="n">generalisation_error</span><span class="p">(</span>
+    <span class="n">KNeighborsClassifier</span><span class="p">,</span>
+    <span class="n">data_generator</span> <span class="o">=</span> <span class="p">(</span><span class="n">make_circles</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;n_samples&quot;</span><span class="p">:</span><span class="n">n_samples</span><span class="p">,</span> <span class="s2">&quot;noise&quot;</span><span class="p">:</span><span class="mf">0.3</span><span class="p">,</span> <span class="s2">&quot;factor&quot;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}),</span>
+    <span class="n">k_range</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span>
+    <span class="n">test_size</span> <span class="o">=</span> <span class="n">test_size</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>We are at k=1
+Time taken for k=1 is 0.5552058219909668. Estimated time remaining is 54.96537637710571
+We are at k=5
+Time taken for k=5 is 0.6944808959960938. Estimated time remaining is 61.23464918136597
+We are at k=9
+Time taken for k=9 is 0.625647783279419. Estimated time remaining is 60.6358155409495
+We are at k=13
+Time taken for k=13 is 0.5516948699951172. Estimated time remaining is 58.24870491027832
+We are at k=17
+Time taken for k=17 is 0.645298957824707. Estimated time remaining is 58.37423825263976
+We are at k=21
+Time taken for k=21 is 0.6553771495819092. Estimated time remaining is 58.400719165802
+We are at k=25
+Time taken for k=25 is 0.6053938865661621. Estimated time remaining is 57.56832013811383
+We are at k=29
+Time taken for k=29 is 0.60294508934021. Estimated time remaining is 56.76451122760773
+We are at k=33
+Time taken for k=33 is 0.6744177341461182. Estimated time remaining is 56.72800657484267
+We are at k=37
+Time taken for k=37 is 1.1034550666809082. Estimated time remaining is 60.4252552986145
+We are at k=41
+Time taken for k=41 is 0.7571449279785156. Estimated time remaining is 60.44768493825739
+We are at k=45
+Time taken for k=45 is 0.6999499797821045. Estimated time remaining is 59.9207558631897
+We are at k=49
+Time taken for k=49 is 0.6113779544830322. Estimated time remaining is 58.77445694116446
+We are at k=53
+Time taken for k=53 is 0.6114397048950195. Estimated time remaining is 57.704954624176025
+We are at k=57
+Time taken for k=57 is 0.6323771476745605. Estimated time remaining is 56.815172831217446
+We are at k=61
+Time taken for k=61 is 0.6302540302276611. Estimated time remaining is 55.94642025232315
+We are at k=65
+Time taken for k=65 is 0.682744026184082. Estimated time remaining is 55.36200101235333
+We are at k=69
+Time taken for k=69 is 0.9543900489807129. Estimated time remaining is 56.00415534443326
+We are at k=73
+Time taken for k=73 is 0.6502640247344971. Estimated time remaining is 55.18171511198345
+We are at k=77
+Time taken for k=77 is 0.6405079364776611. Estimated time remaining is 54.33746814727783
+We are at k=81
+Time taken for k=81 is 0.6615679264068604. Estimated time remaining is 53.59185057594663
+We are at k=85
+Time taken for k=85 is 0.6467571258544922. Estimated time remaining is 52.80136286128651
+We are at k=89
+Time taken for k=89 is 0.753206729888916. Estimated time remaining is 52.379748220029086
+We are at k=93
+Time taken for k=93 is 0.6782107353210449. Estimated time remaining is 51.69301358858744
+We are at k=97
+Time taken for k=97 is 0.7579758167266846. Estimated time remaining is 51.24625611305237
+We are at k=101
+Time taken for k=101 is 0.658642053604126. Estimated time remaining is 50.49283959315374
+We are at k=105
+Time taken for k=105 is 0.7015862464904785. Estimated time remaining is 49.86255177745113
+We are at k=109
+Time taken for k=109 is 0.8266539573669434. Estimated time remaining is 49.54877390180316
+We are at k=113
+Time taken for k=113 is 1.140808343887329. Estimated time remaining is 49.96876186337965
+We are at k=117
+Time taken for k=117 is 1.2645409107208252. Estimated time remaining is 50.573406060536705
+We are at k=121
+Time taken for k=121 is 1.9501848220825195. Estimated time remaining is 52.5835683115067
+We are at k=125
+Time taken for k=125 is 1.6524858474731445. Estimated time remaining is 53.713598549366
+We are at k=129
+Time taken for k=129 is 1.3270471096038818. Estimated time remaining is 54.01425219304634
+We are at k=133
+Time taken for k=133 is 0.9475431442260742. Estimated time remaining is 53.48247456550598
+We are at k=137
+Time taken for k=137 is 1.2251827716827393. Estimated time remaining is 53.44255535943167
+We are at k=141
+Time taken for k=141 is 1.2749838829040527. Estimated time remaining is 53.425323486328125
+We are at k=145
+Time taken for k=145 is 1.1578669548034668. Estimated time remaining is 53.14068970809112
+We are at k=149
+Time taken for k=149 is 1.250629186630249. Estimated time remaining is 52.96144519354168
+We are at k=153
+Time taken for k=153 is 1.3563649654388428. Estimated time remaining is 52.89263947804769
+We are at k=157
+Time taken for k=157 is 1.137650966644287. Estimated time remaining is 52.431384801864624
+We are at k=161
+Time taken for k=161 is 1.0739929676055908. Estimated time remaining is 51.845529771432645
+We are at k=165
+Time taken for k=165 is 1.4144940376281738. Estimated time remaining is 51.70664584069025
+We are at k=169
+Time taken for k=169 is 1.1063411235809326. Estimated time remaining is 51.099949437518454
+We are at k=173
+Time taken for k=173 is 0.9878420829772949. Estimated time remaining is 50.319724949923426
+We are at k=177
+Time taken for k=177 is 0.8627362251281738. Estimated time remaining is 49.37736585405138
+We are at k=181
+Time taken for k=181 is 1.0428621768951416. Estimated time remaining is 48.64992082637289
+We are at k=185
+Time taken for k=185 is 1.241637945175171. Estimated time remaining is 48.133205190617986
+We are at k=189
+Time taken for k=189 is 1.095808982849121. Estimated time remaining is 47.42830308278402
+We are at k=193
+Time taken for k=193 is 1.0746300220489502. Estimated time remaining is 46.6854021841166
+We are at k=197
+Time taken for k=197 is 0.9361269474029541. Estimated time remaining is 45.79072904586792
+We are at k=202
+Time taken for k=202 is 0.7818500995635986. Estimated time remaining is 44.746203492669494
+We are at k=206
+Time taken for k=206 is 0.8384449481964111. Estimated time remaining is 43.764022240271935
+We are at k=210
+Time taken for k=210 is 1.0111701488494873. Estimated time remaining is 42.940436403706386
+We are at k=214
+Time taken for k=214 is 0.8326551914215088. Estimated time remaining is 41.95783470295094
+We are at k=218
+Time taken for k=218 is 0.931546688079834. Estimated time remaining is 41.06159682707353
+We are at k=222
+Time taken for k=222 is 1.416410207748413. Estimated time remaining is 40.54506211621421
+We are at k=226
+Time taken for k=226 is 1.0770339965820312. Estimated time remaining is 39.740932175987645
+We are at k=230
+Time taken for k=230 is 1.3414058685302734. Estimated time remaining is 39.118833451435485
+We are at k=234
+Time taken for k=234 is 1.1156978607177734. Estimated time remaining is 38.3155034962347
+We are at k=238
+Time taken for k=238 is 1.1069669723510742. Estimated time remaining is 37.49594068527222
+We are at k=242
+Time taken for k=242 is 1.1853842735290527. Estimated time remaining is 36.7170904386239
+We are at k=246
+Time taken for k=246 is 0.9114820957183838. Estimated time remaining is 35.75725066277289
+We are at k=250
+Time taken for k=250 is 0.8604750633239746. Estimated time remaining is 34.76898954028175
+We are at k=254
+Time taken for k=254 is 0.7957320213317871. Estimated time remaining is 33.74830377101898
+We are at k=258
+Time taken for k=258 is 0.7807910442352295. Estimated time remaining is 32.72649451402518
+We are at k=262
+Time taken for k=262 is 0.8336899280548096. Estimated time remaining is 31.739239779385656
+We are at k=266
+Time taken for k=266 is 0.7604739665985107. Estimated time remaining is 30.7205074758672
+We are at k=270
+Time taken for k=270 is 1.1086311340332031. Estimated time remaining is 29.87320967281566
+We are at k=274
+Time taken for k=274 is 1.1435470581054688. Estimated time remaining is 29.034023855043493
+We are at k=278
+Time taken for k=278 is 1.0098390579223633. Estimated time remaining is 28.128838573183334
+We are at k=282
+Time taken for k=282 is 1.067314863204956. Estimated time remaining is 27.244181330774868
+We are at k=286
+Time taken for k=286 is 0.9619150161743164. Estimated time remaining is 26.313461436165703
+We are at k=290
+Time taken for k=290 is 0.8264658451080322. Estimated time remaining is 25.33178924207818
+We are at k=294
+Time taken for k=294 is 0.9047689437866211. Estimated time remaining is 24.381823713715015
+We are at k=298
+Time taken for k=298 is 1.0198781490325928. Estimated time remaining is 23.47143316268921
+We are at k=302
+Time taken for k=302 is 0.901054859161377. Estimated time remaining is 22.52063821491442
+We are at k=306
+Time taken for k=306 is 0.9093241691589355. Estimated time remaining is 21.573605271128866
+We are at k=310
+Time taken for k=310 is 0.8161783218383789. Estimated time remaining is 20.601267313345886
+We are at k=314
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time taken for k=314 is 0.8173627853393555. Estimated time remaining is 19.633197621454165
+We are at k=318
+Time taken for k=318 is 1.0657882690429688. Estimated time remaining is 18.73100197315216
+We are at k=322
+Time taken for k=322 is 1.0567927360534668. Estimated time remaining is 17.822656937587407
+We are at k=326
+Time taken for k=326 is 1.3084590435028076. Estimated time remaining is 16.965935049987422
+We are at k=330
+Time taken for k=330 is 1.1306631565093994. Estimated time remaining is 16.061911904668232
+We are at k=334
+Time taken for k=334 is 1.195378065109253. Estimated time remaining is 15.164819217863537
+We are at k=338
+Time taken for k=338 is 1.070302963256836. Estimated time remaining is 14.238635974771835
+We are at k=342
+Time taken for k=342 is 1.1144540309906006. Estimated time remaining is 13.316288493400396
+We are at k=346
+Time taken for k=346 is 1.1408121585845947. Estimated time remaining is 12.393463340298883
+We are at k=350
+Time taken for k=350 is 1.1778759956359863. Estimated time remaining is 11.47073809667067
+We are at k=354
+Time taken for k=354 is 1.0885388851165771. Estimated time remaining is 10.531237462933143
+We are at k=358
+Time taken for k=358 is 0.9773309230804443. Estimated time remaining is 9.576068427827623
+We are at k=362
+Time taken for k=362 is 1.0866870880126953. Estimated time remaining is 8.631227763144524
+We are at k=366
+Time taken for k=366 is 0.9615139961242676. Estimated time remaining is 7.672418863877006
+We are at k=370
+Time taken for k=370 is 0.8312382698059082. Estimated time remaining is 6.703746090653122
+We are at k=374
+Time taken for k=374 is 1.0920302867889404. Estimated time remaining is 5.754643754756197
+We are at k=378
+Time taken for k=378 is 1.0721759796142578. Estimated time remaining is 4.801487445831299
+We are at k=382
+Time taken for k=382 is 0.8843209743499756. Estimated time remaining is 3.8380242685476937
+We are at k=386
+Time taken for k=386 is 0.9196407794952393. Estimated time remaining is 2.877285254370306
+We are at k=390
+Time taken for k=390 is 0.8757297992706299. Estimated time remaining is 1.9164888372226638
+We are at k=394
+Time taken for k=394 is 0.8916060924530029. Estimated time remaining is 0.9575713042056921
+We are at k=399
+Time taken for k=399 is 0.8521950244903564. Estimated time remaining is 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$k$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Error&#39;)
+</pre></div>
+</div>
+<img alt="../_images/kNN_13_1.png" src="../_images/kNN_13_1.png" />
+</div>
+</div>
+<p>The reason why the error shoots up at the end is because of class imbalance. We can see this by sampling.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">more_freq_class_percent</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">n_repeats</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_circles</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">factor</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">noise</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">)</span>         
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">more_freq_class_percent</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">sum</span><span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average frequency of more frequent class in test set </span><span class="si">{</span><span class="n">more_freq_class_percent</span><span class="o">/</span><span class="n">n_repeats</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To verify this, try repeating the generalisation_error plot but set the train_test_split with stratify=y</p>
+</div>
+<div class="section" id="the-decision-boundary-how-k-affects-smoothness">
+<h2>The decision boundary: how k affects smoothness<a class="headerlink" href="#the-decision-boundary-how-k-affects-smoothness" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_circles</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">factor</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">noise</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_classes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">250</span><span class="p">]:</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_classes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># create a contour plot</span>
+    <span class="n">plot_contour</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])),</span> <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])),</span> <span class="n">plot</span> <span class="o">=</span> <span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">),</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Contour plot showing decision boundary of kNN for $k=$</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Class 0&#39;</span><span class="p">,</span> <span class="s1">&#39;Class 1&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_k_range</span><span class="p">(</span><span class="n">n_points</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_fine</span> <span class="o">=</span> <span class="mi">15</span><span class="p">):</span>
+
+    <span class="n">k</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_fine</span><span class="p">))</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">n_fine</span><span class="p">,</span> <span class="n">n_samples</span> <span class="o">-</span> <span class="n">n_fine</span> <span class="p">,</span> <span class="n">n_points</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">int</span><span class="p">))</span> <span class="o">+</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_samples</span> <span class="o">-</span> <span class="n">n_fine</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">k</span>
+
+<span class="k">def</span> <span class="nf">optimal_k</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span>
+        <span class="n">data_generator</span><span class="p">,</span>
+        <span class="n">m_range</span><span class="p">,</span>
+        <span class="n">runs</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determines the optimal k m</span>
+
+<span class="sd">    model : class</span>
+<span class="sd">        Class of the model to use. Must be built using sklearn API</span>
+<span class="sd">    </span>
+<span class="sd">    data_generator : tuple</span>
+<span class="sd">        tuple in the form (generator_function, parameters)</span>
+<span class="sd">        </span>
+<span class="sd">    m_range : iterable</span>
+<span class="sd">        defines the range of the number of samples to use for the problem. Defaults to [1,50)</span>
+<span class="sd">        </span>
+<span class="sd">    runs : int</span>
+<span class="sd">        indicates how many times to repeat the experiment</span>
+<span class="sd">        </span>
+<span class="sd">    test_size : float</span>
+<span class="sd">        indicates percentage of train set to use for testing</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data_generator</span><span class="p">,</span> <span class="n">parameters</span> <span class="o">=</span> <span class="n">data_generator</span>
+
+
+    <span class="n">global_optimal_k</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tot_time</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">m_</span> <span class="ow">in</span> <span class="n">m</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;We are now at m = </span><span class="si">{</span><span class="n">m_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">optimal_k</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">runs</span><span class="p">):</span>
+            <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>            
+            <span class="c1">#k = generate_k_range(n_points = 100, n_samples = int((1-test_size) * m_), n_fine = 30)</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">test_size</span><span class="p">)</span> <span class="o">*</span> <span class="n">m_</span><span class="p">),</span> <span class="mi">100</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">int</span><span class="p">)</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">k_</span> <span class="ow">in</span> <span class="n">k</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;n_samples&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m_</span>
+                <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_generator</span><span class="p">(</span><span class="o">**</span><span class="n">parameters</span><span class="p">)</span>
+                
+            
+                <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">test_size</span><span class="p">)</span>
+                <span class="sd">&quot;&quot;&quot;fig, ax = plot_classes(X_train, y_train)&quot;&quot;&quot;</span>
+                <span class="c1"># train KNN on this data</span>
+                <span class="n">kNN_model</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">k_</span><span class="p">)</span>
+                <span class="n">kNN_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+
+                <span class="c1"># calculate y_hat</span>
+                <span class="n">y_hat</span> <span class="o">=</span> <span class="n">kNN_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+                    <span class="n">X_test</span><span class="p">,</span>
+                <span class="p">)</span>
+                
+                <span class="c1"># consider doing this with leave one out validation to determine the error! Can you see</span>
+                <span class="c1"># if that makes any difference to the plot?</span>
+                <span class="n">correctness_index</span> <span class="o">=</span> <span class="p">[</span><span class="n">y_hat_</span> <span class="o">==</span> <span class="n">y_test_</span> <span class="k">for</span> <span class="n">y_hat_</span><span class="p">,</span> <span class="n">y_test_</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)]</span>
+                <span class="sd">&quot;&quot;&quot;fig, ax = plot_classes(X_test[correctness_index], y_test[correctness_index], plot = (fig, ax), shape = &#39;*&#39;)</span>
+<span class="sd">                fig, ax = plot_classes(</span>
+<span class="sd">                    X_test[[not i for i in correctness_index]],</span>
+<span class="sd">                    y_test[[not i for i in correctness_index]], plot = (fig, ax), shape = &#39;o&#39;)</span>
+<span class="sd">                if k_ == k[2]:</span>
+<span class="sd">                    raise Exception()&quot;&quot;&quot;</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">correctness_index</span><span class="p">)</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">correctness_index</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">correctness_index</span><span class="p">))</span>
+            <span class="n">optimal_k</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">errors</span><span class="p">,</span> <span class="n">k</span><span class="p">))[</span><span class="mi">1</span><span class="p">])</span>
+        
+        <span class="n">time_taken</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="n">tot_time</span> <span class="o">+=</span> <span class="n">time_taken</span>
+        <span class="c1"># TODO correct time estimation</span>
+        <span class="c1">#print(f&#39;Time taken for m={m_} is {time_taken}. Estimated time remaining is {(tot_time / len(k)) * (49 - k_)}&#39;)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">optimal_k</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">optimal_k</span><span class="p">))</span>
+        <span class="n">global_optimal_k</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">optimal_k</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">optimal_k</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Total time taken is t=</span><span class="si">{</span><span class="n">tot_time</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">global_optimal_k</span><span class="p">,</span> <span class="n">m</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_samples</span> <span class="o">=</span> <span class="mi">4000</span>
+<span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">min_samples</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_samples</span><span class="p">,</span> <span class="n">max_samples</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">int</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="n">optimal_k</span><span class="p">(</span>
+    <span class="n">KNeighborsClassifier</span><span class="p">,</span>
+    <span class="n">data_generator</span> <span class="o">=</span> <span class="p">(</span><span class="n">make_circles</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;n_samples&quot;</span><span class="p">:</span><span class="s2">&quot;dynamic&quot;</span><span class="p">,</span> <span class="s2">&quot;noise&quot;</span><span class="p">:</span><span class="mf">0.3</span><span class="p">,</span> <span class="s2">&quot;factor&quot;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}),</span>
+    <span class="n">m_range</span> <span class="o">=</span> <span class="n">m</span><span class="p">,</span>
+    <span class="n">test_size</span> <span class="o">=</span> <span class="n">test_size</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>We are now at m = 100
+10.02
+We are now at m = 179
+15.07
+We are now at m = 259
+22.0
+We are now at m = 338
+26.7
+We are now at m = 418
+36.54
+We are now at m = 497
+36.68
+We are now at m = 577
+44.54
+We are now at m = 657
+50.73
+We are now at m = 736
+50.59
+We are now at m = 816
+56.93
+We are now at m = 895
+63.57
+We are now at m = 975
+67.45
+We are now at m = 1055
+80.65
+We are now at m = 1134
+76.24
+We are now at m = 1214
+91.23
+We are now at m = 1293
+88.6
+We are now at m = 1373
+101.68
+We are now at m = 1453
+102.89
+We are now at m = 1532
+102.62
+We are now at m = 1612
+110.07
+We are now at m = 1691
+113.53
+We are now at m = 1771
+115.87
+We are now at m = 1851
+113.83
+We are now at m = 1930
+138.41
+We are now at m = 2010
+116.09
+We are now at m = 2089
+134.21
+We are now at m = 2169
+151.8
+We are now at m = 2248
+147.35
+We are now at m = 2328
+166.2
+We are now at m = 2408
+157.03
+We are now at m = 2487
+155.77
+We are now at m = 2567
+168.63
+We are now at m = 2646
+155.62
+We are now at m = 2726
+176.56
+We are now at m = 2806
+177.15
+We are now at m = 2885
+180.9
+We are now at m = 2965
+192.71
+We are now at m = 3044
+198.38
+We are now at m = 3124
+198.33
+We are now at m = 3204
+190.95
+We are now at m = 3283
+191.86
+We are now at m = 3363
+212.36
+We are now at m = 3442
+215.56
+We are now at m = 3522
+198.76
+We are now at m = 3602
+250.18
+We are now at m = 3681
+206.28
+We are now at m = 3761
+243.77
+We are now at m = 3840
+217.38
+We are now at m = 3920
+237.53
+We are now at m = 4000
+245.72
+Total time taken is t=44391.4116332531
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">errors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Dataset size, $m$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Optimal value of $k$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Optimal value of $k$&#39;)
+</pre></div>
+</div>
+<img alt="../_images/kNN_21_1.png" src="../_images/kNN_21_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_classes</span><span class="p">(</span><span class="o">*</span><span class="n">make_circles</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="n">noise</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">factor</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 432x288 with 1 Axes&gt;, &lt;AxesSubplot:&gt;)
+</pre></div>
+</div>
+<img alt="../_images/kNN_22_1.png" src="../_images/kNN_22_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_classes</span><span class="p">(</span><span class="o">*</span><span class="n">make_circles</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="n">noise</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">factor</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Figure size 432x288 with 1 Axes&gt;, &lt;AxesSubplot:&gt;)
+</pre></div>
+</div>
+<img alt="../_images/kNN_23_1.png" src="../_images/kNN_23_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errors</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">err</span><span class="o">/</span><span class="mi">100</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">err</span> <span class="ow">in</span> <span class="n">errors</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k_range</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f8607d2c350&gt;]
+</pre></div>
+</div>
+<img alt="../_images/kNN_25_1.png" src="../_images/kNN_25_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">errors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Size of dataset, $m$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Optimal value of $k$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Optimal value of $k$&#39;)
+</pre></div>
+</div>
+<img alt="../_images/kNN_26_1.png" src="../_images/kNN_26_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_samples</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">make_circles</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">noise</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">factor</span> <span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1">#k = round(math.log(n_samples))</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">6</span> <span class="c1">#int(n_samples/2)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># create a contour plot</span>
+<span class="n">plot_contour</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])),</span> <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])),</span> <span class="n">plot</span> <span class="o">=</span> <span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">),</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Contour plot showing decision boundary of kNN for $k=$</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Class 0&#39;</span><span class="p">,</span> <span class="s1">&#39;Class 1&#39;</span><span class="p">])</span>
+
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/kNN_27_0.png" src="../_images/kNN_27_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="useful-links">
+<h1>Useful Links<a class="headerlink" href="#useful-links" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://stats.stackexchange.com/questions/485884/bias-and-variance-in-knn-and-decision-trees">https://stats.stackexchange.com/questions/485884/bias-and-variance-in-knn-and-decision-trees</a>
+<a class="reference external" href="https://stats.stackexchange.com/questions/107870/does-k-nn-with-k-1-always-implies-overfitting">https://stats.stackexchange.com/questions/107870/does-k-nn-with-k-1-always-implies-overfitting</a>
+<a class="reference external" href="https://stackoverflow.com/questions/5751114/nearest-neighbors-in-high-dimensional-data">https://stackoverflow.com/questions/5751114/nearest-neighbors-in-high-dimensional-data</a>
+<a class="reference external" href="https://stackoverflow.com/questions/33508247/how-to-handle-duplicate-data-points-in-k-nearest-neighbor-algorithm">https://stackoverflow.com/questions/33508247/how-to-handle-duplicate-data-points-in-k-nearest-neighbor-algorithm</a></p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./SupervisedLearning"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction to Supervised Learning</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../notebooks.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Content with notebooks</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Yousef Nami<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
