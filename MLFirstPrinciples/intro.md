@@ -9,6 +9,10 @@ This book is a continuously updated collection of notes that I've gathered over 
 
 ## Intended Audience and Prerequisites
 
-This book is best thought of as a handbook, so it is appropriate for anyone who needs a refresher on ML models. It is also good for beginners, but they are advised to follow the relevant links for more detail if necessary, since the book is not exhaustive.
+This book is best thought of as a handbook, so it is appropriate for anyone who needs a refresher on ML models. It is also good for beginners, but they are advised to follow the relevant links for more detail if necessary, since the book is not exhaustive. 
 
-In terms of prerequisites, you should have a basic familiarity with statistics, linear algebra and calculus.
+In terms of prerequisites, you should have a basic familiarity with statistics, linear algebra and calculus. You should also be familiar with Python, or at least have a good knowledge of programming in another language. Occasionally I may use other languages (e.g. bash, R, etc.) but knowledge of them will not be necessary for understanding any implementations.
+
+## Setup
+
+For now, the setup process is manual.

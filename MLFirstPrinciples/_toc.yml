@@ -6,10 +6,11 @@ root: intro
 parts:
   - caption: Introduction
     chapters:
-      - file: setup.md
+      - file: Introduction/intro.md
   - caption: Supervised Learning
     chapters:
-      - file: markdown.md
+      - file: SupervisedLearning/intro.md
+      - file: SupervisedLearning/kNN.ipynb
   - caption: Unsupervised Learning
     chapters:
       - file: notebooks.ipynb
