@@ -37,18 +37,22 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="\(k\)-Nearest-Neighbours" href="kNN.html" />
@@ -221,6 +225,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#notation">
+   Notation
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -233,6 +250,19 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#notation">
+   Notation
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -241,12 +271,22 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="introduction-to-supervised-learning">
 <h1>Introduction to Supervised Learning<a class="headerlink" href="#introduction-to-supervised-learning" title="Permalink to this headline">¶</a></h1>
+<p>The problem of supervised learning is to predict a certain quantity (this is known as the <strong>target</strong> variable) that we are interested in using some other quantities that we have measured (these are known as <strong>predictor</strong> variables), which are often directly or indirectly related to the quantity of interest.</p>
+<p>A good learning algorithm will:</p>
 <ul class="simple">
+<li><p>be stable: the output should not change drastically if the input is slightly perturbed</p></li>
+<li><p>be efficient: it should be able to learn and predict relatively efficiently as a function of data size</p></li>
+<li><p>be robust: it should be able to do well on unseen data</p></li>
 <li><p>introduce SL</p></li>
 <li><p>Give examples, e.g. Classification or Regression
 Supervised Learning is a subset of Machine Learning that tries to predict known values (we can this <strong>target variables</strong>)</p></li>
 </ul>
 <p>The targ</p>
+<div class="section" id="notation">
+<h2>Notation<a class="headerlink" href="#notation" title="Permalink to this headline">¶</a></h2>
+<p>In general, we assume that our predictor variables are represented by a matrix,
+<span class="math notranslate nohighlight">\(\underline{\underline{X}}\in \mathbb{R}^{m\times n}\)</span></p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
