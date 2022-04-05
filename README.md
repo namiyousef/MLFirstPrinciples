@@ -1,5 +1,5 @@
 # MLFirstPrinciples
-https://img.shields.io/github/workflow/status/namiyousef/MLFirstPrinciples/deploy
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/namiyousef/MLFirstPrinciples/deploy)
 
 This repository contains work I've done for learning and using different Data Science technologies.
 Where convenient, I've tried to engage with the technologies more than treating them like
