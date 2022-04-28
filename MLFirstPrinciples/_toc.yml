@@ -11,6 +11,23 @@ parts:
     chapters:
       - file: SupervisedLearning/intro.md
       - file: SupervisedLearning/kNN.ipynb
+      - file: SupervisedLearning/Regression.ipynb
+
   - caption: Unsupervised Learning
     chapters:
       - file: notebooks.ipynb
+  - caption: Bayesian Statistics
+    chapters:
+      - file: BayesianStatistics/graphical_models/intro.md
+        sections:
+        - file: BayesianStatistics/graphical_models/graphical_models.md
+  - caption: TimeSeries
+    chapters:
+      - file: Timeseries/intro.md
+      - file: Timeseries/classification.ipynb
+      - file: Timeseries/clustering.ipynb
+  - caption: Appendix
+    chapters:
+      - file: Appendix/A.Proofs/intro.md
+        sections:
+        - file: Appendix/A.Proofs/Regression.ipynb
