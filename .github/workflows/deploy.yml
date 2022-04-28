@@ -30,6 +30,7 @@ jobs:
     - name: Build the book
       run: |
         jupyter-book build MLFirstPrinciples
+        ipython kernel install --name=MLFirstPrinciples_dev --user
 
     # Deploy the book's HTML to gh-pages branch
     - name: GitHub Pages action
